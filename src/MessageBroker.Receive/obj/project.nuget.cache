@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "gOX59SWQi/oChO7MkUWHC02eWe62BZFqm3Xs/LZDutf7CqLsAXOSAO/RZzOlEvZceAhWADbbu1nN9HnwVAikvA==",
+  "success": true,
+  "projectFilePath": "/Users/paulmichaels/source/repos/SoftwareArchitectureTalk/src/MessageBroker.Receive/MessageBroker.Receive.csproj",
+  "expectedPackageFiles": [
+    "/Users/paulmichaels/.nuget/packages/rabbitmq.client/6.4.0/rabbitmq.client.6.4.0.nupkg.sha512",
+    "/Users/paulmichaels/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/Users/paulmichaels/.nuget/packages/system.threading.channels/4.7.1/system.threading.channels.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

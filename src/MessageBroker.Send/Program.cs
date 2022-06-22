@@ -11,9 +11,8 @@ static void SendNewMessage(string message)
     var factory = new ConnectionFactory() { HostName = "localhost" };
     using var connection = factory.CreateConnection();
     using var channel = connection.CreateModel();
-    
-    var result = channel.QueueDeclare("NewQueue", true, false, false, null);
-    Console.WriteLine(result);
-  
-    channel.BasicPublish("", "NewQueue", null, Encoding.UTF8.GetBytes(message));                
+
+    channel.ExchangeDeclare("SalesOrder", ExchangeType.Fanout);
+             
+    channel.BasicPublish("SalesOrder", "", false, null, Encoding.UTF8.GetBytes(message));
 }

@@ -2,22 +2,26 @@
 using RabbitMQ.Client.Events;
 using System.Text;
 
-ReceiveNextMessage();
+var factory = new ConnectionFactory() { HostName = "localhost" };
+using var connection = factory.CreateConnection();
+using var channel = connection.CreateModel();
 
-static void ReceiveNextMessage()
-{
-    var factory = new ConnectionFactory() { HostName = "localhost" };
-    using var connection = factory.CreateConnection();
-    using var channel = connection.CreateModel();
-    
-    var result = channel.QueueDeclare("NewQueue", true, false, false, null);
-    Console.WriteLine(result);
+channel.ExchangeDeclare("SalesOrder", ExchangeType.Fanout);
+
+var result = channel.QueueDeclare("OrderRaised", false, false, false, null);
+string queueName = result.QueueName;
+channel.QueueBind(queueName, "SalesOrder", "");
+
+Console.WriteLine(result);
   
-    EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
-    consumer.Received += Consumer_Received;
+EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
+consumer.Received += Consumer_Received;
   
-    channel.BasicConsume("NewQueue", true, consumer);  
-}
+channel.BasicConsume(queueName, true, consumer);
+
+
+Console.WriteLine("Receiving...");
+Console.ReadLine();
 
 static void Consumer_Received(object sender, BasicDeliverEventArgs e)
 {
